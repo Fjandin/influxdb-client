@@ -1,0 +1,18 @@
+{
+  "name": "influx-connector",
+  "version": "1.0.0",
+  "description": "Influx client for influxdb 0.9",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ifluxdb"
+  ],
+  "author": "René Bischoff <rene.bischoff@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^2.9.30",
+    "lodash": "^3.9.3"
+  }
+}
