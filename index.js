@@ -14,13 +14,14 @@ var request = function request(options, body) {
             // Add chunks on data
             res.on("data", chunks.push.bind(chunks));
 
-            // Join chunks and return string
+            // Join chunks on end and make utf8 string
             res.on("end", function() {
                 var responseBody = Buffer.concat(chunks).toString("utf8");
                 // Check if response is JSON
                 if (res.headers["content-type"] === "application/json") {
                     responseBody = JSON.parse(responseBody);
                 }
+                // Add status code and headers
                 resolve({
                     statusCode: res.statusCode,
                     headers: res.headers,
@@ -43,7 +44,7 @@ var request = function request(options, body) {
 };
 
 // Constructor
-var InfluxConnector = function InfluxConnector(options) {
+var InfluxdbClient = function InfluxConnector(options) {
     // Store options
     this.options = lodash.extend({
         host: "127.0.0.1",
@@ -70,7 +71,7 @@ var InfluxConnector = function InfluxConnector(options) {
 };
 
 // Send data to influxdb
-InfluxConnector.prototype.write = function write(name, value, tags, database, retentionPolicy) {
+InfluxdbClient.prototype.write = function write(name, value, tags, database, retentionPolicy) {
     var options;
     var body;
 
@@ -107,7 +108,7 @@ InfluxConnector.prototype.write = function write(name, value, tags, database, re
 };
 
 // Query influxdb
-InfluxConnector.prototype.query = function query(sql, database) {
+InfluxdbClient.prototype.query = function query(sql, database) {
     var options;
 
     // Http request options
@@ -121,8 +122,8 @@ InfluxConnector.prototype.query = function query(sql, database) {
 };
 
 // Static method to create instance
-InfluxConnector.createClient = function createClient(options) {
-    return new InfluxConnector(options);
+InfluxdbClient.create = function create(options) {
+    return new InfluxdbClient(options);
 };
 
-module.exports = InfluxConnector;
+module.exports = InfluxdbClient;

@@ -8,9 +8,9 @@ Create a client
 ```
 var InfluxdbClient = require("influxdb-client");
 
-var client = InfluxdbClient.createClient({
+var client = InfluxdbClient.create({
     host: "127.0.0.1",  
-    port: 8086,         
+    port: 8086,
     protocol: "http",           // Currently only http is supported
     database: null,             // Default database
     user: null,
@@ -31,7 +31,7 @@ client.query("SHOW SERIES;")
 ```
 Write data
 
-database and retentionPolicy can be defaulted 
+database and retentionPolicy can be defaulted
 ```
 client.write("name", 10, {tag1: 1, tag2, 2}, "database", "retentionPolicy")
     .then(function(response) {
