@@ -71,7 +71,7 @@ var InfluxdbClient = function InfluxConnector(options) {
 };
 
 // Send data to influxdb
-InfluxdbClient.prototype.write = function write(name, value, tags, database, retentionPolicy) {
+InfluxdbClient.prototype.write = function write(name, values, tags, database, retentionPolicy) {
     var options;
     var body;
 
@@ -92,8 +92,15 @@ InfluxdbClient.prototype.write = function write(name, value, tags, database, ret
     // comma join name and tags
     body = [body.join(",")];
 
-    // Add value
-    body.push("value=" + value);
+    // Make sure values is an object
+    if (typeof (values) !== "object") {
+        values = {value: values};
+    }
+
+    // Add values to body
+    body.push(lodash.map(values || {}, function(v, k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(v);
+    }).join(","));
 
     // Add timestamp if options it set
     if (this.options.userClientTimestamp) {
@@ -119,6 +126,19 @@ InfluxdbClient.prototype.query = function query(sql, database) {
 
     // Do request and return promise
     return request(options);
+};
+
+// test
+InfluxdbClient.prototype.test = function test(database, retentionPolicy) {
+    var options;
+    var body = "gps,station=1,sensor=1 lng=1,lat=2";
+    // Http request options
+    options = lodash.extend({
+        method: "POST",
+        path: "/write?db=" + (database || this.options.database) + "&rp=" + (retentionPolicy || this.options.retentionPolicy || "")
+    }, this.optionsHttp);
+    // Do request and return promise
+    return request(options, body);
 };
 
 // Static method to create instance

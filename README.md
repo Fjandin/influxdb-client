@@ -33,7 +33,7 @@ Write data
 
 database and retentionPolicy can be defaulted
 ```
-client.write("name", 10, {tag1: 1, tag2, 2}, "database", "retentionPolicy")
+client.write("name", {value: 10, someothervalue:5}, {tag: "one", someothertag, "two"}, "database", "retentionPolicy")
     .then(function(response) {
         console.log(response.statusCode);
     })
