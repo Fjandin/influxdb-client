@@ -4,7 +4,7 @@ A very simple NodeJS connector for influxdb 0.9
 For more information on influxdb please visit https://influxdb.com/
 
 ## Usage
-Create a client
+### Create a client
 ```
 var InfluxdbClient = require("influxdb-client");
 
@@ -19,7 +19,7 @@ var client = InfluxdbClient.create({
     userClientTimestamp: false
 });
 ```
-Run a query
+### Run a query
 ```
 client.query("SHOW SERIES;")
     .then(function(response) {
@@ -29,9 +29,11 @@ client.query("SHOW SERIES;")
         console.warn(err);
     });
 ```
-Write data
+### Write data
 
-database and retentionPolicy can be defaulted
+client.write(name, values*[, tags, database, retentionPolicy]*)
+
+**values** can be an object `{columnname: value ...}` or other then `{value: values}` is assumed.
 ```
 client.write("name", {value: 10, someothervalue:5}, {tag: "one", someothertag, "two"}, "database", "retentionPolicy")
     .then(function(response) {
