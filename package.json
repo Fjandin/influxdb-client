@@ -1,15 +1,27 @@
 {
-  "name": "influx-connector",
-  "version": "1.0.0",
+  "name": "influxdb-client",
+  "version": "0.0.1",
   "description": "Influx client for influxdb 0.9",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Fjandin/influxdb-client.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "ifluxdb"
   ],
-  "author": "René Bischoff <rene.bischoff@gmail.com>",
+  "author": {
+    "name": "René Bischoff",
+    "email": "rene.bischoff@gmail.com",
+    "url": "http://github.com/Fjandin"
+  },
+  "bugs": {
+    "url": "https://github.com/Fjandin/influxdb-client/issues"
+  },
+  "homepage": "https://github.com/Fjandin/influxdb-client",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.30",
