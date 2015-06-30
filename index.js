@@ -128,19 +128,6 @@ InfluxdbClient.prototype.query = function query(sql, database) {
     return request(options);
 };
 
-// test
-InfluxdbClient.prototype.test = function test(database, retentionPolicy) {
-    var options;
-    var body = "gps,station=1,sensor=1 lng=1,lat=2";
-    // Http request options
-    options = lodash.extend({
-        method: "POST",
-        path: "/write?db=" + (database || this.options.database) + "&rp=" + (retentionPolicy || this.options.retentionPolicy || "")
-    }, this.optionsHttp);
-    // Do request and return promise
-    return request(options, body);
-};
-
 // Static method to create instance
 InfluxdbClient.create = function create(options) {
     return new InfluxdbClient(options);
