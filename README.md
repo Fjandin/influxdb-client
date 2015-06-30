@@ -3,6 +3,10 @@ A very simple NodeJS connector for influxdb 0.9
 
 For more information on influxdb please visit https://influxdb.com/
 
+## Installation
+
+`npm install influxdb-client`
+
 ## Usage
 ### Create a client
 ```
