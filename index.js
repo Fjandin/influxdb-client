@@ -111,10 +111,10 @@ InfluxdbClient.prototype.write = function write(name, values, tags, database, re
 
     // Add timestamp if override timestamp is set
     if (timestamp) {
-        body.push(timestamp);
+        body.push(timestamp * 1000000);
     // Add client timestamp if options it set
     } else if (this.options.userClientTimestamp) {
-        body.push(Date().now);
+        body.push(Date().now * 1000000);
     }
 
     // Make array and remove double space
