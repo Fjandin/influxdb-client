@@ -35,7 +35,9 @@ client.query("SHOW SERIES;")
 ```
 ### Write data
 
-client.write(name, values*[, tags, database, retentionPolicy]*)
+client.write(name, values*[, tags, database, retentionPolicy, timestamp]*)
+
+**timestamp** can be set to override timestamp sent to influxdb
 
 **values** can be an object `{columnname: value ...}` or other then `{value: values}` is assumed.
 ```

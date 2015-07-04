@@ -71,7 +71,7 @@ var InfluxdbClient = function InfluxConnector(options) {
 };
 
 // Send data to influxdb
-InfluxdbClient.prototype.write = function write(name, values, tags, database, retentionPolicy) {
+InfluxdbClient.prototype.write = function write(name, values, tags, database, retentionPolicy, timestamp) {
     var options;
     var body;
 
@@ -102,8 +102,11 @@ InfluxdbClient.prototype.write = function write(name, values, tags, database, re
         return encodeURIComponent(k) + "=" + encodeURIComponent(v);
     }).join(","));
 
-    // Add timestamp if options it set
-    if (this.options.userClientTimestamp) {
+    // Add timestamp if override timestamp is set
+    if (timestamp) {
+        body.push(timestamp);
+    // Add client timestamp if options it set
+    } else if (this.options.userClientTimestamp) {
         body.push(Date().now);
     }
 
