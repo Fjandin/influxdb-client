@@ -70,16 +70,23 @@ var InfluxdbClient = function InfluxConnector(options) {
     }
 };
 
-// Send data to influxdb
-InfluxdbClient.prototype.write = function write(name, values, tags, database, retentionPolicy, timestamp) {
+// Write raw
+InfluxdbClient.prototype.writeRaw = function writeRaw(body, database, retentionPolicy) {
     var options;
-    var body;
 
     // Http request options
     options = lodash.extend({
         method: "POST",
         path: "/write?db=" + (database || this.options.database) + "&rp=" + (retentionPolicy || this.options.retentionPolicy || "")
     }, this.optionsHttp);
+
+    // Do request and return promise
+    return request(options, body);
+};
+
+// Send data to influxdb
+InfluxdbClient.prototype.write = function write(name, values, tags, database, retentionPolicy, timestamp) {
+    var body;
 
     // Add name and tags to body
     body = [name];
@@ -114,7 +121,7 @@ InfluxdbClient.prototype.write = function write(name, values, tags, database, re
     body = body.join(" ").replace(/\s{2,}/g, " ");
 
     // Do request and return promise
-    return request(options, body);
+    return this.writeRaw(body, database, retentionPolicy);
 };
 
 // Query influxdb
