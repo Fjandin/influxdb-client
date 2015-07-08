@@ -115,8 +115,8 @@ InfluxdbClient.prototype.parse = function parse(name, values, tags, time) {
         return influxdbValueEscape(k) + "=" + influxdbValueEscape(v);
     }).join(","));
 
-    // comma join name and tags
-    body = [body.join(",")];
+    // comma join name and tags (remove empty first)
+    body = [body.filter(function(v) {return v; }).join(",")];
 
     // Make sure values is an object. If plain object treat as field "value"
     if (typeof (values) !== "object") {
