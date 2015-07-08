@@ -26,6 +26,10 @@ var influxdbResponseParse = function influxdbResponseParse(response) {
                 (serie.columns || []).forEach(function(column, index) {
                     row[column] = value[index];
                 });
+                // time to timestamp
+                if (row.time) {
+                    row.time = (new Date(row.time)).getTime();
+                }
                 return row;
             })
         };
