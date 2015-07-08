@@ -19,11 +19,11 @@ var influxdbResponseParse = function influxdbResponseParse(response) {
     return series.map(function(serie) {
         return {
             name: serie.name,
-            tags: serie.tags,
-            columns: serie.columns,
-            values: serie.values.map(function(value) {
+            tags: serie.tags || {},
+            columns: serie.columns || [],
+            values: (serie.values || []).map(function(value) {
                 var row = {};
-                serie.columns.forEach(function(column, index) {
+                (serie.columns || []).forEach(function(column, index) {
                     row[column] = value[index];
                 });
                 return row;
@@ -96,9 +96,9 @@ InfluxdbClient.prototype.parse = function parse(name, values, tags, time) {
     // Validate
     if (!name || typeof name !== "string") {
         throw new Error("[influxdb-client] name must be a string");
-    } else if(tags && !lodash.isObject(tags)) {
+    } else if (tags && !lodash.isObject(tags)) {
         throw new Error("[influxdb-client] tags must be an object");
-    } else if(time && typeof time !== "number") {
+    } else if (time && typeof time !== "number") {
         throw new Error("[influxdb-client] time must be a number");
     }
     // TODO! Add more validation
