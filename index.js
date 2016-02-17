@@ -3,12 +3,12 @@
 var lodash = require("lodash");
 var request = require("./lib/request.js");
 
-// Check if var is numeric
+// Helper to Check if var is numeric
 var stringIsNumeric = function stringIsNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-// Check if var is boolean
+// Helper to check if var is boolean
 var stringIsBoolean = function stringIsBoolean(b) {
     return !!b.match(/^(?:t|T|true|True|TRUE|f|F|false|False|FALSE)$/);
 };

@@ -26,8 +26,8 @@ var client = InfluxdbClient.create({
 ### Run a query
 ```
 client.query("SHOW SERIES;")
-    .then(function(response) {
-        console.log(response.statusCode, response.headers, response.body);
+    .then(function(results) {
+        console.log(results);
     })
     .catch(function(err) {
         console.warn(err);
@@ -37,11 +37,11 @@ client.query("SHOW SERIES;")
 
 client.write(name, values*[, tags, database, retentionPolicy, timestamp]*)
 
-**timestamp** can be set to override timestamp sent to influxdb
+**timestamp** Js timestamp expected (ms).
 
 **values** can be an object `{columnname: value ...}` or other then `{value: values}` is assumed.
 ```
-client.write("name", {value: 10, someothervalue:5}, {tag: "one", someothertag, "two"}, "database", "retentionPolicy")
+client.write("name", {value: 10, value2: 5}, {tag: "foo", tag2, "bar"}, "database", "retentionPolicy")
     .then(function(response) {
         console.log(response.statusCode);
     })
